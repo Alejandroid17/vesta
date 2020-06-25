@@ -5,6 +5,7 @@ import sys
 
 
 def main():
+    print("Esto es un print")
     sys.stdout('Test')
     sys.stdout(os.environ['MY'])
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vesta.settings')
