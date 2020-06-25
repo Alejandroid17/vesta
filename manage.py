@@ -5,7 +5,8 @@ import sys
 
 
 def main():
-    print(os.environ['MY'])
+    sys.stdout('Test')
+    sys.stdout(os.environ['MY'])
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vesta.settings')
     try:
         from django.core.management import execute_from_command_line
