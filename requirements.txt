@@ -4,3 +4,4 @@ drf-yasg==1.17.1
 django-guardian==2.3.0
 djangorestframework-simplejwt==4.4.0
 django-restql==0.10.1
+psycopg2==2.8.5
