@@ -6,7 +6,7 @@ import sys
 
 def main():
     print('DEBUG: {}'.format(os.getenv('DEBUG')))
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vesta.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vesta.settings.base')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
