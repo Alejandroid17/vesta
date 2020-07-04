@@ -1,4 +1,5 @@
 from django.db import models
+from django_currentuser.middleware import get_current_user
 
 
 class ModificationModel(models.Model):
@@ -10,3 +11,7 @@ class ModificationModel(models.Model):
 
     class Meta:
         abstract = True
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.modified_by = get_current_user()
+        super().save(force_insert, force_update, using, update_fields)
