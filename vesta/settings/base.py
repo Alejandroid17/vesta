@@ -31,9 +31,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third
+    'rest_framework',
 
     # Own
-    'user'
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -119,6 +120,13 @@ STATIC_URL = '/static/'
 
 # Overrides the default user model
 AUTH_USER_MODEL = 'user.User'
+
+# Rest framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 # Import local settings
 try:
