@@ -8,9 +8,10 @@ from user.managers import UserManager
 
 
 class User(AbstractBaseUser, UUIDModel, CreationModel, ModificationModel, PermissionsMixin):
-    first_name = models.CharField(_("First name"), max_length=120, blank=True)
-    last_name = models.CharField(_("Last name"), max_length=120, blank=True)
-    email = models.EmailField(_("Email"), unique=True, db_index=True)
+    first_name = models.CharField(_("First name"), max_length=120, blank=True, help_text=_('First name of the user.'))
+    last_name = models.CharField(_("Last name"), max_length=120, blank=True, help_text=_('Last name of the user.'))
+    email = models.EmailField(_("Email"), unique=True, db_index=True,
+                              help_text=_('Email of the user. It is used to log in.'))
     is_staff = models.BooleanField(_('Staff status'), default=False,
                                    help_text=_('Designates whether the user can log into this admin site.'))
     is_active = models.BooleanField(_('Active'), default=True,

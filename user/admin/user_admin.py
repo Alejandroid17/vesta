@@ -27,7 +27,7 @@ class UserChangeForm(DjangoUserChangeForm):
 class UserAdmin(AuthUserAdmin):
     add_form_template = 'admin/auth/user/add_form.html'
     model = User
-    readonly_fields = ['id', 'date_joined', 'last_login', 'created_at', 'created_by', 'modified_at', 'modified_by']
+    readonly_fields = ['uuid', 'date_joined', 'last_login', 'created_at', 'created_by', 'modified_at', 'modified_by']
     form = UserChangeForm
     add_form = UserCreationForm
     list_display = ['email', 'first_name', 'last_name', 'is_active']
@@ -36,7 +36,7 @@ class UserAdmin(AuthUserAdmin):
     ordering = ['email']
 
     fieldsets = [
-        [_('Information'), {'fields': ['email', 'first_name', 'last_name', 'id']}],
+        [_('Information'), {'fields': ['email', 'first_name', 'last_name', 'uuid']}],
         [_('Permissions'), {'fields': ['is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions']}],
         [_('Important dates'), {'fields': ['last_login', 'date_joined']}],
         [_('Password'), {'fields': ['password']}],
