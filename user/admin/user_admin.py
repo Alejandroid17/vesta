@@ -12,7 +12,7 @@ from user.models.user_model import User
 class UserCreationForm(DjangoUserCreationForm):
     class Meta:
         model = User
-        fields = ('email',)
+        fields = ['email']
 
 
 class UserChangeForm(DjangoUserChangeForm):
@@ -27,26 +27,22 @@ class UserChangeForm(DjangoUserChangeForm):
 class UserAdmin(AuthUserAdmin):
     add_form_template = 'admin/auth/user/add_form.html'
     model = User
-    readonly_fields = ('id', 'date_joined', 'last_login', 'created_at', 'created_by', 'modified_at')
+    readonly_fields = ['id', 'date_joined', 'last_login', 'created_at', 'created_by', 'modified_at', 'modified_by']
     form = UserChangeForm
     add_form = UserCreationForm
-    list_display = ('email', 'first_name', 'last_name', 'is_active')
-    list_filter = ('is_superuser', 'is_active')
-    search_fields = ('first_name', 'last_name', 'email')
-    ordering = ('email',)
+    list_display = ['email', 'first_name', 'last_name', 'is_active']
+    list_filter = ['is_superuser', 'is_active']
+    search_fields = ['first_name', 'last_name', 'email']
+    ordering = ['email']
 
-    fieldsets = (
-        (_('Information'), {'fields': ('email', 'first_name', 'last_name', 'id')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (_('Password'), {'fields': ('password',)}),
-        (_('Creation and modification'), {'fields': ('created_at', 'created_by', 'modified_at')}),
-    )
+    fieldsets = [
+        [_('Information'), {'fields': ['email', 'first_name', 'last_name', 'id']}],
+        [_('Permissions'), {'fields': ['is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions']}],
+        [_('Important dates'), {'fields': ['last_login', 'date_joined']}],
+        [_('Password'), {'fields': ['password']}],
+        [_('Creation and modification'), {'fields': ['created_at', 'created_by', 'modified_at', 'modified_by']}]
+    ]
 
-    add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2'),
-        }),
-    )
+    add_fieldsets = [
+        [None, {'classes': ['wide'], 'fields': ['email', 'password1', 'password2']}]
+    ]

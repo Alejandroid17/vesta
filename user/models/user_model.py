@@ -3,12 +3,11 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import TimeStampedModel
-from core.models import UUIDModel
+from core.models import (CreationModel, UUIDModel, ModificationModel)
 from user.managers import UserManager
 
 
-class User(AbstractBaseUser, UUIDModel, TimeStampedModel, PermissionsMixin):
+class User(AbstractBaseUser, UUIDModel, CreationModel, ModificationModel, PermissionsMixin):
     first_name = models.CharField(_("First name"), max_length=120, blank=True)
     last_name = models.CharField(_("Last name"), max_length=120, blank=True)
     email = models.EmailField(_("Email"), unique=True, db_index=True)
@@ -29,7 +28,7 @@ class User(AbstractBaseUser, UUIDModel, TimeStampedModel, PermissionsMixin):
         ordering = ['-date_joined']
         app_label = 'user'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.email)
 
     def get_full_name(self) -> str:
