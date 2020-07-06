@@ -5,6 +5,7 @@ If you want to overwrite the settings, define a file called `local.py` in the fo
 define the new variable.
 """
 import os
+from split_settings.tools import include
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -122,12 +123,8 @@ STATIC_URL = '/static/'
 # Overrides the default user model
 AUTH_USER_MODEL = 'user.User'
 
-# Rest framework settings
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
+# Import third party settings
+include('third_party/*.py')
 
 # Import local settings
 try:
