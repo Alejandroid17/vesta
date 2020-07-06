@@ -1,9 +1,14 @@
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import re_path
+from django.urls import include, re_path
+from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView, TokenVerifyView)
 
 from core.api_schema import schema_view
+from user.api import UserModelViewSet
+
+router = DefaultRouter()
+router.register(r'user', UserModelViewSet, basename='user')
 
 urlpatterns = [
     # API documentation and playground
@@ -19,6 +24,9 @@ urlpatterns = [
     re_path(r'auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     re_path(r'auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     re_path(r'auth/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+
+    # API
+    re_path(r'', include(router.urls))
 ]
 
 urlpatterns += staticfiles_urlpatterns()
