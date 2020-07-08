@@ -4,7 +4,7 @@ from django.urls import include, re_path
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView, TokenVerifyView)
 
-from core.api_schema import schema_view
+from core.api.schemas.schema_view import schema_view
 from user.api import UserModelViewSet
 
 router = DefaultRouter()
