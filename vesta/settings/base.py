@@ -1,10 +1,11 @@
 """
 Application base configuration.
 
-If you want to overwrite the settings, define a file called `local.py` in the folder `settings` and 
+If you want to overwrite the settings, define a file called `local.py` in the folder `settings` and
 define the new variable.
 """
 import os
+
 from split_settings.tools import include
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
