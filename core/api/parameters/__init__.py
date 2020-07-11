@@ -1,1 +1,1 @@
-from core.api.parameters.query_parameter import query_parameter
+from .query_parameter import query_parameter

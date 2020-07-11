@@ -1,1 +1,1 @@
-from core.viewsets.base_model_view_set import BaseModelViewSet
+from .base_model_view_set import BaseModelViewSet

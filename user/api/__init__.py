@@ -1,1 +1,1 @@
-from user.api.user_api import UserModelViewSet
+from .user_api import UserModelViewSet

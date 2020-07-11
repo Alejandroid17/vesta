@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserChangeForm as DjangoUserChangeForm
 from django.contrib.auth.forms import UserCreationForm as DjangoUserCreationForm
 from django.utils.translation import gettext_lazy as _
 
-from user.models.user_model import User
+from user.models import User
 
 
 # Forms

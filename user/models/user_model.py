@@ -3,7 +3,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import (CreationModel, UUIDModel, ModificationModel)
+from core.models import (CreationModel, UUIDModel)
+from core.models.modification_model import ModificationModel
 from user.managers import UserManager
 
 
