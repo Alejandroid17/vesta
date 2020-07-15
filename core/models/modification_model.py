@@ -9,8 +9,9 @@ class ModificationModel(models.Model):
     """
     modified_at = models.DateTimeField(_('Modified at'), auto_now=True, editable=False,
                                        help_text=_('Date when it was modified.'))
-    modified_by = models.ForeignKey('user.User', verbose_name=_('Modified by'), related_name='modified_%(class)s',
-                                    on_delete=models.CASCADE, help_text=_('User who modified it.'))
+    modified_by = models.ForeignKey('user.User', verbose_name=_('Modified by'), null=True,
+                                    related_name='modified_%(class)s', on_delete=models.CASCADE,
+                                    help_text=_('User who modified it.'))
 
     class Meta:
         abstract = True

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     # Third
     'drf_yasg',
     'rest_framework',
+    'guardian',
 
     # Own
     'user',
@@ -71,6 +72,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'vesta.wsgi.application'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'guardian.backends.ObjectPermissionBackend',
+]
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
