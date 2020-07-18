@@ -24,3 +24,6 @@ venv.bak/
 
 # Migrations
 **/migrations/*
+
+# Sphinx documentation
+docs/_build/
