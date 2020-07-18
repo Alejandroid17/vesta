@@ -11,9 +11,8 @@ Group.add_to_class('label', models.CharField(_('Label'), max_length=150, help_te
 # CreationModel
 Group.add_to_class('created_at', models.DateTimeField(_('Created at'), auto_now_add=True, editable=False,
                                                       help_text=_('Date when it was created.')))
-Group.add_to_class('created_by',
-                   CurrentUserField(_('Created by'), related_name='created_%(class)s',
-                                    help_text=_('User who created it.')))
+Group.add_to_class('created_by', CurrentUserField(verbose_name=_('Created by'), related_name='created_%(class)s',
+                                                  help_text=_('User who created it.')))
 # ModificationModel
 Group.add_to_class('modified_at', models.DateTimeField(_('Modified at'), auto_now=True, editable=False,
                                                        help_text=_('Date when it was modified.')))

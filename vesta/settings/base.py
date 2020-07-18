@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
     'guardian',
+    'django_extensions',
 
     # Own
     'user',
