@@ -1,0 +1,129 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-07-18 13:52+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: core/models/creation_model.py:10 group/models/group_model.py:12
+msgid "Created at"
+msgstr "Creado el"
+
+#: core/models/creation_model.py:11 group/models/group_model.py:13
+msgid "Date when it was created."
+msgstr "Fecha en la cual fue creado."
+
+#: core/models/creation_model.py:12 group/models/group_model.py:15
+msgid "Created by"
+msgstr "Creado por"
+
+#: core/models/creation_model.py:13 group/models/group_model.py:16
+msgid "User who created it."
+msgstr "Usuario que lo creó."
+
+#: core/models/modification_model.py:10 group/models/group_model.py:18
+msgid "Modified at"
+msgstr "Modificado por"
+
+#: core/models/modification_model.py:11 group/models/group_model.py:19
+msgid "Date when it was modified."
+msgstr "Fecha en la cual fue modificado."
+
+#: core/models/modification_model.py:12 group/models/group_model.py:21
+msgid "Modified by"
+msgstr "Modificado por"
+
+#: core/models/modification_model.py:14 group/models/group_model.py:22
+msgid "User who modified it."
+msgstr "Usuario que lo modificó."
+
+#: group/admin/group_admin.py:11 user/admin/user_admin.py:39
+msgid "Information"
+msgstr "Información"
+
+#: group/admin/group_admin.py:12 user/admin/user_admin.py:40
+msgid "Permissions"
+msgstr "Permisos"
+
+#: group/admin/group_admin.py:13 user/admin/user_admin.py:43
+msgid "Creation and modification"
+msgstr "Creación y modificación"
+
+#: group/models/group_model.py:10
+msgid "Label"
+msgstr "Etiqueta"
+
+#: group/models/group_model.py:10
+msgid "Label of the group."
+msgstr "Etiqueta del grupo"
+
+#: user/admin/user_admin.py:41
+msgid "Important dates"
+msgstr "Fechas importantes"
+
+#: user/admin/user_admin.py:42
+msgid "Password"
+msgstr "Contraseña"
+
+#: user/models/user_model.py:12
+msgid "First name"
+msgstr "Nombre"
+
+#: user/models/user_model.py:12
+msgid "First name of the user."
+msgstr "Nombre del usuario"
+
+#: user/models/user_model.py:13
+msgid "Last name"
+msgstr "Apellido"
+
+#: user/models/user_model.py:13
+msgid "Last name of the user."
+msgstr "Apellido del usuario."
+
+#: user/models/user_model.py:14
+msgid "Email"
+msgstr "Email"
+
+#: user/models/user_model.py:15
+msgid "Email of the user. It is used to log in."
+msgstr "Email del usuario. Es usado para iniciar sesión."
+
+#: user/models/user_model.py:16
+msgid "Staff status"
+msgstr ""
+
+#: user/models/user_model.py:17
+msgid "Designates whether the user can log into this admin site."
+msgstr "Designa si el usuario puede iniciar sesión en este sitio de administración."
+
+#: user/models/user_model.py:18
+msgid "Active"
+msgstr "Activo"
+
+#: user/models/user_model.py:19
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr "Disigna si este usuario debe ser tratado como activo. Anule la selección de esto en lugar de eliminar cuentas."
+
+#: user/models/user_model.py:21
+msgid "Date joined"
+msgstr "Fecha de registro"
+
+#: user/models/user_model.py:28 user/models/user_model.py:29
+msgid "user"
+msgstr "usuario"

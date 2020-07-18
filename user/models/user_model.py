@@ -1,3 +1,4 @@
+from django.conf.global_settings import LANGUAGES
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils import timezone
@@ -19,6 +20,7 @@ class User(AbstractBaseUser, UUIDModel, CreationModel, ModificationModel, Permis
                                     help_text=_('Designates whether this user should be treated as active. Unselect '
                                                 'this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
+    language = models.CharField(_('Language'), max_length=15, choices=LANGUAGES, help_text=_('Language of the user.'))
 
     objects = UserManager()
 
