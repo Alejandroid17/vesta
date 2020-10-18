@@ -21,6 +21,7 @@ venv.bak/
 
 # IDE stuff
 .idea
+.vscode
 
 # Migrations
 **/migrations/*
