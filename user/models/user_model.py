@@ -7,11 +7,14 @@ from django.utils.translation import ugettext_lazy as _
 from core.models import (CreationModel, UUIDModel)
 from core.models.modification_model import ModificationModel
 from user.managers import UserManager
+from loggable.models import Loggable
 
 
 class User(AbstractBaseUser, UUIDModel, CreationModel, ModificationModel, PermissionsMixin):
-    first_name = models.CharField(_("First name"), max_length=120, blank=True, help_text=_('First name of the user.'))
-    last_name = models.CharField(_("Last name"), max_length=120, blank=True, help_text=_('Last name of the user.'))
+    first_name = models.CharField(
+        _("First name"), max_length=120, blank=True, help_text=_('First name of the user.'))
+    last_name = models.CharField(
+        _("Last name"), max_length=120, blank=True, help_text=_('Last name of the user.'))
     email = models.EmailField(_("Email"), unique=True, db_index=True,
                               help_text=_('Email of the user. It is used to log in.'))
     is_staff = models.BooleanField(_('Staff status'), default=False,
@@ -20,9 +23,11 @@ class User(AbstractBaseUser, UUIDModel, CreationModel, ModificationModel, Permis
                                     help_text=_('Designates whether this user should be treated as active. Unselect '
                                                 'this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('Date joined'), default=timezone.now)
-    language = models.CharField(_('Language'), max_length=15, choices=LANGUAGES, help_text=_('Language of the user.'))
+    language = models.CharField(_('Language'), max_length=15,
+                                choices=LANGUAGES, help_text=_('Language of the user.'))
 
     objects = UserManager()
+    log = Loggable()
 
     USERNAME_FIELD = 'email'  # Field to identify the user.
 

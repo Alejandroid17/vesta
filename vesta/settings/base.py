@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Own
     'user',
     'group',
+    'loggable',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_currentuser.middleware.ThreadLocalUserMiddleware',
-    'core.middleware.locale.LocaleMiddleware',
+    'core.middleware.locale.LocaleMiddleware'
 ]
 
 ROOT_URLCONF = 'vesta.urls'
