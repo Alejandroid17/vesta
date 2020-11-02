@@ -39,30 +39,38 @@ class Loggable(object):
         self.inherit = False
         self.bases = (models.Model,)
 
-    def __str__(self):
-        return "Hola"
-
     def get_meta_options(self, model):
         """
         Returns a dictionary of fields that will be added to
         the Meta inner class of the historical record model.
         """
         meta_fields = {}
-        name = format_lazy('loggable {}', smart_str(model._meta.verbose_name))
-        meta_fields['verbose_name'] = name
+        meta_fields['verbose_name'] = format_lazy(
+            'loggable {}', smart_str(model._meta.verbose_name))
+        meta_fields['indexes'] = [
+            models.Index(fields=['created']),
+            models.Index(
+                fields=[self._get_loggable_field_name(model), 'level']),
+            models.Index(
+                fields=[self._get_loggable_field_name(model), 'created'])
+        ]
         return meta_fields
 
     def get_loggable_model_name(self, model):
         return 'Loggable{}'.format(model._meta.object_name)
 
+    def _get_loggable_field_name(self, model):
+        return model.__name__.lower()
+
     def create_loggable_model(self, model):
 
         attrs = {
             '__module__': self.module,
-            model.__name__.lower(): models.ForeignKey('{}.{}'.format(model._meta.app_label, model.__name__),
-                                                      related_name='%(class)s',
-                                                      on_delete=models.CASCADE,
-                                                      verbose_name=_('user')),
+            self._get_loggable_field_name(model): models.ForeignKey('{}.{}'.format(model._meta.app_label, model.__name__),
+                                                                    related_name='%(class)s',
+                                                                    on_delete=models.CASCADE,
+                                                                    db_index=True,
+                                                                    verbose_name=_('user')),
             'created': models.DateTimeField(_('created'),
                                             default=timezone.now,
                                             editable=False),
@@ -71,7 +79,7 @@ class Loggable(object):
             'message': models.CharField(_('message'), max_length=600),
             '__str__': lambda self: '{id} | {model_id} | {level} | {created}'.format(id=self.id,
                                                                                      model_id=getattr(
-                                                                                         self, model.__name__.lower()),
+                                                                                         self, self._get_loggable_field_name()),
                                                                                      level=LoggingLevel(
                                                                                          self.level).name,
                                                                                      created=self.created)
@@ -92,14 +100,7 @@ class Loggable(object):
         self.module = cls.__module__
         self.cls = cls
         models.signals.class_prepared.connect(self.finalize, weak=False)
-        self.add_extra_methods(cls)
-
-    def add_extra_methods(self, cls):
-
-        def log(self):
-            print('Comming soon...')
-
-        setattr(cls, 'log', log)
+        self._add_extra_methods(cls)
 
     def finalize(self, sender, **kwargs):
         if self.cls is not sender:  # set in concrete
@@ -116,3 +117,10 @@ class Loggable(object):
         descriptor = HistoryDescriptor(loggable_model)
         setattr(sender, self.manager_name, descriptor)
         sender._meta.loggable_manager_attribute = self.manager_name
+
+    def _add_extra_methods(self, cls):
+
+        def log(self):
+            print('Comming soon...')
+
+        setattr(cls, 'log', log)
