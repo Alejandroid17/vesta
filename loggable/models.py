@@ -18,31 +18,32 @@ from django.db.models import ManyToManyField, Q
 from django.db.models.fields.proxy import OrderWrt
 from django.forms.models import model_to_dict
 from django.urls import reverse
-from django.utils.text import format_lazy
 from django.utils import timezone
-
-
-from django.utils.translation import gettext_lazy as _
 from django.utils.encoding import smart_str
+from django.utils.text import format_lazy
+from django.utils.translation import gettext_lazy as _
 
-from loggable.manager import HistoryDescriptor, LoggableManager
 from loggable.constants import LoggingLevel
-
+from loggable.manager import HistoryDescriptor, LoggableManager
 
 registered_models = {}
 
 
 class Loggable(object):
 
-    def __init__(self):
+    def __init__(self, log_type='database', max_entries=1000):
 
         self.inherit = False
         self.bases = (models.Model,)
+        self.foreign_key_field_name = None
+        self.log_type = getattr(
+            settings, 'LOGGABLE_LOG_TYPE', None) or log_type
+        self.max_entries = getattr(
+            settings, 'LOGGABLE_MAX_ENTRIES', None) or max_entries
 
     def get_meta_options(self, model):
-        """
-        Returns a dictionary of fields that will be added to
-        the Meta inner class of the historical record model.
+        """Gets a dictionary with the fields that will be added to 
+        the Meta inner class of the loggable model.
         """
         meta_fields = {}
         meta_fields['verbose_name'] = format_lazy(
@@ -50,27 +51,26 @@ class Loggable(object):
         meta_fields['indexes'] = [
             models.Index(fields=['created']),
             models.Index(
-                fields=[self._get_loggable_field_name(model), 'level']),
+                fields=[self.foreign_key_field_name, 'level']),
             models.Index(
-                fields=[self._get_loggable_field_name(model), 'created'])
+                fields=[self.foreign_key_field_name, 'created'])
         ]
         return meta_fields
 
     def get_loggable_model_name(self, model):
+        """Gets the model name."""
         return 'Loggable{}'.format(model._meta.object_name)
 
-    def _get_loggable_field_name(self, model):
-        return model.__name__.lower()
-
     def create_loggable_model(self, model):
+        """Creates the loggable model that will be related with the main model."""
 
         attrs = {
             '__module__': self.module,
-            self._get_loggable_field_name(model): models.ForeignKey('{}.{}'.format(model._meta.app_label, model.__name__),
-                                                                    related_name='%(class)s',
-                                                                    on_delete=models.CASCADE,
-                                                                    db_index=True,
-                                                                    verbose_name=_('user')),
+            self.foreign_key_field_name: models.ForeignKey('{}.{}'.format(model._meta.app_label, model.__name__),
+                                                           related_name='%(class)s',
+                                                           on_delete=models.CASCADE,
+                                                           db_index=True,
+                                                           verbose_name=_('user')),
             'created': models.DateTimeField(_('created'),
                                             default=timezone.now,
                                             editable=False),
@@ -79,7 +79,7 @@ class Loggable(object):
             'message': models.CharField(_('message'), max_length=600),
             '__str__': lambda self: '{id} | {model_id} | {level} | {created}'.format(id=self.id,
                                                                                      model_id=getattr(
-                                                                                         self, self._get_loggable_field_name()),
+                                                                                         self, model.__name__.lower()),
                                                                                      level=LoggingLevel(
                                                                                          self.level).name,
                                                                                      created=self.created)
@@ -99,6 +99,7 @@ class Loggable(object):
         self.manager_name = name
         self.module = cls.__module__
         self.cls = cls
+        self.foreign_key_field_name = cls.__name__.lower()
         models.signals.class_prepared.connect(self.finalize, weak=False)
         self._add_extra_methods(cls)
 
@@ -117,8 +118,17 @@ class Loggable(object):
         descriptor = HistoryDescriptor(loggable_model)
         setattr(sender, self.manager_name, descriptor)
         sender._meta.loggable_manager_attribute = self.manager_name
+        models.signals.post_save.connect(
+            self.rotate_log, sender=loggable_model, weak=False, dispatch_uid='post_save_{}_loggable_signal'.format(sender.__name__.lower()))
+
+    def rotate_log(self, sender, instance, created, using=None, **kwargs):
+        """If the number of entries per `foreign_key_field_name` object is exceeded, the oldest ones are deleted."""
+        id_list = sender.objects.filter(**{self.foreign_key_field_name: getattr(
+            instance, self.foreign_key_field_name)}).order_by('-created').values_list('id', flat=True)[self.max_entries:]
+        sender.objects.filter(id__in=id_list).delete()
 
     def _add_extra_methods(self, cls):
+        """Add extra methods to the related model."""
 
         def log(self):
             print('Comming soon...')
