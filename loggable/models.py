@@ -24,7 +24,7 @@ from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
 from loggable.constants import LoggingLevel
-from loggable.manager import HistoryDescriptor, LoggableManager
+from loggable.manager import LoggableDescriptor, LoggableManager
 
 registered_models = {}
 
@@ -115,7 +115,7 @@ class Loggable(object):
         module = importlib.import_module(self.module)
         setattr(module, loggable_model.__name__, loggable_model)
 
-        descriptor = HistoryDescriptor(loggable_model)
+        descriptor = LoggableDescriptor(loggable_model)
         setattr(sender, self.manager_name, descriptor)
         sender._meta.loggable_manager_attribute = self.manager_name
         models.signals.post_save.connect(
@@ -127,10 +127,19 @@ class Loggable(object):
             instance, self.foreign_key_field_name)}).order_by('-created').values_list('id', flat=True)[self.max_entries:]
         sender.objects.filter(id__in=id_list).delete()
 
-    def _add_extra_methods(self, cls):
+    def _add_extra_methods(_self, cls):
         """Add extra methods to the related model."""
 
-        def log(self):
-            print('Comming soon...')
+        def log(self, message, level=LoggingLevel.INFO):
+            """Add a log entry with the message and log level.
+
+            Args:
+                self (:class:): model that use the `Loggable` class.
+                message (str): message to be saved.
+                level (:enum: `~loggable.constants.LoggingLevel`): Log level.
+
+            """
+            getattr(self, _self.manager_name).create(
+                user=self, level=level, message=message)
 
         setattr(cls, 'log', log)
