@@ -1,30 +1,16 @@
 from __future__ import unicode_literals
 
-import copy
 import importlib
-import threading
-import uuid
-import warnings
 
-import django
-import six
-from django.apps import apps
 from django.conf import settings
-from django.contrib import admin
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
-from django.db.models import ManyToManyField, Q
-from django.db.models.fields.proxy import OrderWrt
-from django.forms.models import model_to_dict
-from django.urls import reverse
 from django.utils import timezone
 from django.utils.encoding import smart_str
 from django.utils.text import format_lazy
 from django.utils.translation import gettext_lazy as _
 
 from loggable.constants import LoggingLevel
-from loggable.manager import LoggableDescriptor, LoggableManager
+from loggable.manager import LoggableDescriptor
 
 registered_models = {}
 
