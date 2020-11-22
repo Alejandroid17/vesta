@@ -11,19 +11,22 @@ class LocaleMiddleware(LocaleMiddleware):
         language = request.session.get('language')
         if not language:
             urlconf = getattr(request, 'urlconf', settings.ROOT_URLCONF)
-            i18n_patterns_used, prefixed_default_language = is_language_prefix_patterns_used(urlconf)
+            i18n_patterns_used, prefixed_default_language = is_language_prefix_patterns_used(
+                urlconf)
 
             if request.user.is_authenticated:
-                language = request.user.language or translation.get_language_from_request(request, check_path=i18n_patterns_used)
-                language_from_path = translation.get_language_from_path(request.path_info)
+                language = request.user.language or translation.get_language_from_request(
+                    request, check_path=i18n_patterns_used)
+                language_from_path = translation.get_language_from_path(
+                    request.path_info)
                 if not language_from_path and i18n_patterns_used and not prefixed_default_language:
                     language = settings.LANGUAGE_CODE
 
             else:
-                language = translation.get_language_from_request(request, check_path=i18n_patterns_used)
-            
+                language = translation.get_language_from_request(
+                    request, check_path=i18n_patterns_used)
+
             request.session.setdefault('language', language)
 
         translation.activate(language)
         request.LANGUAGE_CODE = translation.get_language()
-        
