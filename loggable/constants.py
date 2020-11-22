@@ -1,8 +1,8 @@
-import logging
 from enum import IntEnum
 
 
 class LoggingLevel(IntEnum):
+    """Enum of available log levels."""
     CRITICAL = 50
     FATAL = 50
     ERROR = 40

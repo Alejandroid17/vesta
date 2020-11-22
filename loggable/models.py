@@ -16,6 +16,7 @@ registered_models = {}
 
 
 class Loggable(object):
+    """Loggable manager that allows to add the funcionality of saving logs on the model instances."""
 
     def __init__(self, log_type='database', max_entries=1000):
 

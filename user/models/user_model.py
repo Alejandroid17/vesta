@@ -27,7 +27,7 @@ class User(AbstractBaseUser, UUIDModel, CreationModel, ModificationModel, Permis
                                 choices=LANGUAGES, help_text=_('Language of the user.'))
 
     objects = UserManager()
-    log = Loggable()
+    logs = Loggable()
 
     USERNAME_FIELD = 'email'  # Field to identify the user.
 
