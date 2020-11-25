@@ -2,7 +2,11 @@ Apps
 ====
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 10
 
-   source/group
-   source/user
+   modules/core/index
+   modules/user/index
+   modules/group/index
+   modules/loggable/index
+   modules/luperca/index
+   modules/vesta/index
