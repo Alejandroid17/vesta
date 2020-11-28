@@ -11,7 +11,7 @@ jobs:
         with:
           node-version: "14"
       - name: Install node requirements
-        run: npm install .github/workflows/autogen-docs-structure/package.json
+        run: npm install .github/workflows/autogen-docs-structure
       - name: Run Autogen docs structure
         run: node .github/workflows/autogen-docs-structure/autogen-docs-structure.js
       - name: Update repository
