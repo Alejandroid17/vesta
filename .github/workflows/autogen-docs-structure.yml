@@ -1,0 +1,23 @@
+name: Autogen docs structure
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - name: Install node requirements
+        run: npm install .github/workflows/autogen-docs-structure
+      - name: Run Autogen docs structure
+        run: node .github/workflows/autogen-docs-structure/autogen-docs-structure.js
+      - name: Update repository
+        uses: EndBug/add-and-commit@v4
+        with:
+          author_name: Alejandroid17
+          author_email: alejandrofernandezm94@gmail.com
+          message: "[GitHub Actions] - Autogen docs structure"
+          add: "*"
