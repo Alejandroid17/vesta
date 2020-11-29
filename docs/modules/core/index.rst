@@ -4,7 +4,7 @@ Core
 .. toctree::
    :maxdepth: 10
 
-   middleware
-   models
-   serializers
+   middleware/index
+   models/index
+   serializers/index
    utils/index
