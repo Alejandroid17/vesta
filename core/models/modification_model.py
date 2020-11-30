@@ -4,8 +4,7 @@ from django_currentuser.middleware import get_current_user
 
 
 class ModificationModel(models.Model):
-    """An abstract base class model that provides self-updating ``created`` and ``modified`` fields with UUID as
-    primary_key field.
+    """An abstract base class model that provides self-updating ``modified_at`` and ``modified_by`` fields.
     """
     modified_at = models.DateTimeField(_('Modified at'), auto_now=True, editable=False,
                                        help_text=_('Date when it was modified.'))
