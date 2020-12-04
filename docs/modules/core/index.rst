@@ -8,5 +8,4 @@ This module contains all the code (abstract models, serializers, utilities, etc)
 
    middleware/index
    models/index
-   serializers/index
-   utils/index
+   viewsets/index
