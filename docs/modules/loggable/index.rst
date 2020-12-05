@@ -30,3 +30,11 @@ The differents logs available are emumerate in ``LoggingLevel`` class.
 
 .. automodule:: loggable.constants
    :members:
+
+More
+----
+
+.. toctree::
+   :maxdepth: 10
+
+   models
