@@ -6,6 +6,7 @@ var capitalize = require("capitalize");
 const ignoreFiles = [
   "__pycache__",
   ".git",
+  ".yml",
   "node_modules",
   "docs",
   ".github",
