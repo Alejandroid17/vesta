@@ -1,5 +1,5 @@
 """
-Django rest framework siempre jwt settings.
+Django rest framework simple jwt settings.
 
 See Also:
   - https://django-rest-framework-simplejwt.readthedocs.io/en/latest/index.html
