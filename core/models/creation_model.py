@@ -4,8 +4,7 @@ from django_currentuser.db.models import CurrentUserField
 
 
 class CreationModel(models.Model):
-    """An abstract base class model that provides self-updating ``created`` and ``modified`` fields with UUID as
-    primary_key field.
+    """An abstract base class model that provides self-updating ``created_at`` and ``created_by`` fields.
     """
     created_at = models.DateTimeField(_('Created at'), auto_now_add=True, editable=False,
                                       help_text=_('Date when it was created.'))

@@ -1,2 +1,2 @@
-Base
-====
+Base settings
+=============

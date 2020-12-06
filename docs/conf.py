@@ -26,8 +26,8 @@ django.setup()
 # -- Project information -----------------------------------------------------
 
 project = 'Vesta'
-copyright = '2020, Alejandro'
-author = 'Alejandro'
+copyright = '2020, Alejandroid17'
+author = 'Alejandroid17'
 
 # The full version, including alpha/beta/rc tags
 release = '0'
