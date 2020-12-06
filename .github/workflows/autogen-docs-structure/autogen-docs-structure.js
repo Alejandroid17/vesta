@@ -22,6 +22,10 @@ const ignoreFiles = [
   "CHANGELOG",
   "requirements.txt",
   "manage.py",
+  "urls.py",
+  "asgi.py",
+  "wsgi.py",
+  "apps.py",
 ];
 
 console.log("Init script");
