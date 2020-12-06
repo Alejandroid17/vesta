@@ -6,7 +6,7 @@ var capitalize = require("capitalize");
 const ignoreFiles = [
   "__pycache__",
   ".git",
-  "*.yml",
+  ".readthedocs.yml",
   "node_modules",
   "docs",
   ".github",
@@ -50,25 +50,26 @@ const getHeader = (title) => {
 
 recursive(".", ignoreFiles, (err, files) => {
   files.map((item) => {
+    console.log(item);
     let filePath = path.join(
       currentPath,
       ...basePath,
       item.replace("__init__.py", "index.rst").replace(".py", ".rst")
     );
 
-    let folderPath = path.dirname(filePath);
+    // let folderPath = path.dirname(filePath);
 
-    if (!fs.existsSync(folderPath)) {
-      fs.mkdirSync(folderPath, { recursive: true });
-      console.info("Folder created:", folderPath);
-    }
+    // if (!fs.existsSync(folderPath)) {
+    //   fs.mkdirSync(folderPath, { recursive: true });
+    //   console.info("Folder created:", folderPath);
+    // }
 
-    if (!fs.existsSync(filePath)) {
-      let fileTitle = getTitle(filePath, filePath.includes("index.rst"));
-      fs.writeFile(filePath, getHeader(fileTitle), (err) => {
-        if (err) throw err;
-        console.info("File created:", filePath);
-      });
-    }
+    // if (!fs.existsSync(filePath)) {
+    //   let fileTitle = getTitle(filePath, filePath.includes("index.rst"));
+    //   fs.writeFile(filePath, getHeader(fileTitle), (err) => {
+    //     if (err) throw err;
+    //     console.info("File created:", filePath);
+    //   });
+    // }
   });
 });
