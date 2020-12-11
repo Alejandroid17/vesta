@@ -5,7 +5,7 @@ class LoggableDescriptor(object):
     def __init__(self, model):
         self.model = model
 
-    def __get__(self, instance):
+    def __get__(self, instance, *args):
         if instance is None:
             return LoggableManager(self.model)
         return LoggableManager(self.model, instance)

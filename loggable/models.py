@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 
 import importlib
+import os
+import logging
 
 from django.conf import settings
 from django.db import models
@@ -18,15 +20,16 @@ registered_models = {}
 class Loggable(object):
     """Loggable manager that allows to add the funcionality of saving logs on the model instances."""
 
-    def __init__(self, log_type='database', max_entries=1000):
+    def __init__(self, log_type='database', max_entries=None, **kwargs):
 
         self.inherit = False
         self.bases = (models.Model,)
         self.foreign_key_field_name = None
-        self.log_type = getattr(
-            settings, 'LOGGABLE_LOG_TYPE', None) or log_type
-        self.max_entries = getattr(
-            settings, 'LOGGABLE_MAX_ENTRIES', None) or max_entries
+        self.log_type = log_type
+        self.max_entries = max_entries or getattr(
+            settings, 'LOGGABLE_MAX_ENTRIES', 1000)
+        self.log_folder = kwargs.get('log_folder') or getattr(settings, 'LOGGABLE_FOLDER_PATH', os.path.join(
+            'var/log/', settings.BASE_DIR.split('/')[-1]))
 
     def get_meta_options(self, model):
         """Gets a dictionary with the fields that will be added to 
@@ -57,7 +60,7 @@ class Loggable(object):
                                                            related_name='%(class)s',
                                                            on_delete=models.CASCADE,
                                                            db_index=True,
-                                                           verbose_name=_('user')),
+                                                           verbose_name=self.foreign_key_field_name),
             'created': models.DateTimeField(_('created'),
                                             default=timezone.now,
                                             editable=False),
@@ -126,7 +129,10 @@ class Loggable(object):
                 level (:enum: `~loggable.constants.LoggingLevel`): Log level.
 
             """
-            getattr(self, _self.manager_name).create(
-                user=self, level=level, message=message)
+            getattr(self, _self.manager_name).create(**{
+                _self.foreign_key_field_name: self,
+                'level': level,
+                'message': message
+            })
 
         setattr(cls, 'log', log)
